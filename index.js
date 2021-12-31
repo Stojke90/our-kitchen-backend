@@ -21,9 +21,9 @@ app.use(cors());
 app.use("/cooks", cookRoutes);
 app.use("/recipes", recipeRoutes);
 
-// app.get("/", (req, res) => {
-//   res.send("Welcome to Our kitchen!!!");
-// });
+app.get("/", (req, res) => {
+  res.send("Welcome to Our kitchen!!!");
+});
 
 // PORT
 const PORT = process.env.PORT || 5000;
