@@ -4,7 +4,18 @@ import mongoose from "mongoose";
 // get all Recipes
 export const getAllRecipes = async (req, res) => {
   try {
-    const recipe = await Recipe.find();
+    const recipe = await Recipe.find(
+      {},
+      {
+        image_meal: 1,
+        meal_name: 1,
+        food_ingredients: 1,
+        preparation_time: 1,
+        cooking: 1,
+        cook_name: 1,
+        __v: 1,
+      }
+    );
     res.status(200).json(recipe);
   } catch (error) {
     res.status(404).json({ message: error.message });

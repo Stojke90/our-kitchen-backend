@@ -94,3 +94,53 @@ export const cooksImgAndName = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+// find cook by id and delete
+export const findCookByIdAndDelete = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No user with id: ${id}`);
+  try {
+    const userById = await Cook.findByIdAndDelete(id);
+    res.status(200).json(userById);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+};
+
+// approv user request
+export const approvUser = async (req, res) => {
+  const { data } = req.body;
+  const { _id, role } = data;
+  try {
+    const approveCook = await Cook.findByIdAndUpdate(
+      { _id },
+      { role: 1 },
+      { new: true }
+    );
+
+    res.status(200).json(approveCook);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// edit user data
+export const editUserData = async (req, res) => {
+  const { data } = req.body;
+
+  try {
+    const changeUserData = await Cook.findByIdAndUpdate(
+      data._id,
+      { ...data },
+      { new: true }
+    );
+
+    res.status(201).json(changeUserData);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
